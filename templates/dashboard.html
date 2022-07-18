@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Dictionary App - Dashboard</title>
+{% endblock %}
+
+{% block dash_active %}
+class="action"
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <h2>Word Index</h2>
+        <div class="col-md-2 sidenav">
+            <a href="#" class="side-active" id="word-index">All Words</a>
+            <a href="#" id="word-add">Add New</a>
+            <div>
+                <form action="javascript:0" id="word-form">
+                    <div class="form-group">
+                        <label for="word">Word:</label>
+                        <input type="text" class="form-control" name="word" id="word" placeholder="Type in the word here" required>
+                    </div>
+                    <div>
+                        <label for="meaning">Meaning:</label>
+                        <textarea class="form-control" name="meaning" id="meaning" placeholder="Type the meaning of the word here" required> </textarea>
+                    </div>
+                    <button id="submit" type="submit" class="btn btn-primary btn-block btn-lg">Submit</button>
+                    <button id="cancel" type="button" class="btn btn-warning btn-block btn-lg">Cancel</button>
+
+                </form>
+            </div>
+            <a href="#" id="logo-add">Add Logo</a>
+            <div>
+                <form action="javascript:0" id="logo-form" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="word">Upload:</label>
+                        <input type="file" class="form-control" name="logo" id="logo"  accept="image/*" >
+                    </div>
+                    <button id="submit" type="submit" class="btn btn-primary btn-block btn-lg">Submit</button>
+                    <button id="logo-cancel" type="button" class="btn btn-warning btn-block btn-lg">Cancel</button>
+    
+                </form>
+            </div>
+        </div>
+
+        <div class="col-md-10 main">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>SN</th>
+                        <th>Word</th>
+                        <th>Meaning</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for word in words %}
+                    <tr>
+                        <td>{{ loop.index}}</td>
+                        <td class="word-word">{{ word['word'] }}</td>
+                        <td class="word-meaning">{{ word['meaning'] }}</td>
+                        <form action="javascript:0" class="update-form">
+                            <td class="edit-word" ><input type="text" value="{{ word['word'] }}" required></td>
+                            <td class="edit-meaning" ><textarea required>{{ word['meaning'] }} </textarea></td>
+                            <td><button class="btn btn-sm btn-primary btn-block submit" id=" {{ word['id'] }}">submit</button></td>
+                        </form>
+                        <td><button class="btn btn-sm btn-success btn-block edit" id=" {{ word['id'] }}">Edit</button></td>
+                        <td><button class="btn btn-sm btn-danger btn-block delete" id=" {{ word['id'] }}">Delete</button></td>
+                        <td><button class="btn btn-sm btn-warning btn-block cancel" id=" {{ word['id'] }}">Cancel</button></td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="3">The dictionary as no word at the moment,please try again later</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}
